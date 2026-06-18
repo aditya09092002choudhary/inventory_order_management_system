@@ -2,6 +2,7 @@ from decimal import Decimal
 from typing import List, Optional
 
 from pydantic import BaseModel, ConfigDict, conint
+from pydantic import computed_field
 
 
 class OrderItemCreate(BaseModel):
@@ -16,13 +17,22 @@ class OrderCreate(BaseModel):
 
 class OrderItemRead(BaseModel):
     model_config = ConfigDict(from_attributes=True)
+
     id: int
     product_id: int
     quantity: int
     unit_price: Decimal
     line_total: Decimal
-    product_name: Optional[str] = None
-    sku: Optional[str] = None
+
+    @computed_field
+    @property
+    def product_name(self) -> str | None:
+        return getattr(self.product, "name", None)
+
+    @computed_field
+    @property
+    def sku(self) -> str | None:
+        return getattr(self.product, "sku", None)
 
 
 class OrderRead(BaseModel):

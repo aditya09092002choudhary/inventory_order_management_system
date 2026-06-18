@@ -17,9 +17,28 @@ def list_orders(db: Session = Depends(get_db)):
     return crud.list_orders(db)
 
 
-@router.get("/{order_id}", response_model=schemas.OrderRead)
+@router.get("/{order_id}")
 def get_order(order_id: int, db: Session = Depends(get_db)):
-    return crud.get_order_or_404(db, order_id)
+    order = crud.get_order_or_404(db, order_id)
+
+    return {
+        "id": order.id,
+        "customer_id": order.customer_id,
+        "customer_name": order.customer.full_name,
+        "total_amount": order.total_amount,
+        "items": [
+            {
+                "id": item.id,
+                "product_id": item.product_id,
+                "product_name": item.product.name,
+                "sku": item.product.sku,
+                "quantity": item.quantity,
+                "unit_price": item.unit_price,
+                "line_total": item.line_total,
+            }
+            for item in order.items
+        ],
+    }
 
 
 @router.delete("/{order_id}", status_code=204)
