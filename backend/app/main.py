@@ -25,6 +25,11 @@ app.add_middleware(
 app.include_router(api_router)
 
 
+@app.get("/")
+def root():
+    return {"status": "ok"}
+
+
 @app.on_event("startup")
 def on_startup():
     deadline = time.time() + 30

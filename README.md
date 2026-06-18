@@ -57,12 +57,12 @@ A modular, containerized Inventory & Order Management System built with:
 
 3. Open:
    - Frontend: http://localhost
-   - Backend docs: http://localhost:8000/docs
+   - Backend docs: https://inventory-order-management-system-ut0x.onrender.com/
 
 ## Deployment
 
-- Backend: Render, Railway, or Fly.io
-- Frontend: Vercel or Netlify
+- Backend: Render
+- Frontend: Netlify
 
 Set the frontend API URL to your deployed backend URL, and set the backend `DATABASE_URL` to your hosted PostgreSQL connection string.
 
