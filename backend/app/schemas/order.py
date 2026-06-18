@@ -17,22 +17,13 @@ class OrderCreate(BaseModel):
 
 class OrderItemRead(BaseModel):
     model_config = ConfigDict(from_attributes=True)
-
     id: int
     product_id: int
     quantity: int
     unit_price: Decimal
     line_total: Decimal
-
-    @computed_field
-    @property
-    def product_name(self) -> str | None:
-        return getattr(self.product, "name", None)
-
-    @computed_field
-    @property
-    def sku(self) -> str | None:
-        return getattr(self.product, "sku", None)
+    product_name: Optional[str] = None
+    sku: Optional[str] = None
 
 
 class OrderRead(BaseModel):
